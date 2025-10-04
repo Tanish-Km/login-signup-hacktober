@@ -5,6 +5,8 @@ Provides a minimal authentication UI with toggle functionality between **Login**
 
 ---
 
+### NOTE: Make sure to add your profile details to contributors.json in [Quiver 2025](https://github.com/noodles-sed/hacktober-base)
+
 ## 🚀 Features
 
 - ✨ Clean & responsive design  
