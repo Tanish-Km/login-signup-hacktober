@@ -5,168 +5,285 @@
   <meta charset="UTF-8">
   <title>Login & Signup Page</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f0f2f5;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+    * {
       margin: 0;
-    }
-
-    .container {
-      background: #fff;
-      padding: 20px 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      width: 300px;
-      transition: opacity 0.4s ease, transform 0.4s ease;
-    }
-
-    .container:hover {
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-      transform: scale(1.02);
-      transition: 0.3s ease;
-    }
-
-
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    input {
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    input:focus {
-      border-color: #764ba2;
-      box-shadow: 0 0 5px rgba(118, 75, 162, 0.5);
-      outline: none;
-    }
-
-
-    button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      background: #4CAF50;
-      border: none;
-      color: white;
-      font-size: 16px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #45a049;
-    }
-
-    .toggle-link {
-      text-align: center;
-      margin-top: 15px;
-      font-size: 14px;
-    }
-
-    .toggle-link a {
-      color: #007BFF;
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    .password-wrapper {
-      position: relative;
-      width: 100%;
-    }
-
-    .password-wrapper input {
-      width: 100%;
+      padding: 0;
       box-sizing: border-box;
     }
 
-    .toggle-password {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      cursor: pointer;
-      font-size: 16px;
-      color: #666
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #b2b8eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
     }
 
-    body {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    .login-container {
+      display: flex;
+      width: 900px;
+      height: 600px;
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .image-section {
+  flex: 1;
+  background-image: url('https://digifloat.io/wp-content/uploads/2021/02/Free-3D-Illustration-FB.jpg');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+    }
+
+    .image-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      
+    }
+
+    .form-section {
+      flex: 1;
+      padding: 60px 50px;
+      background: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    h2 {
+  font-size: 32px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 40px;
+  text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+      font-weight: 500;
+    }
+
+    input[type="text"], input[type="email"], input[type="password"] {
+      width: 100%;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border-color 0.3s ease;
+      background: #f8f9fa;
+    }
+
+    input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
+      outline: none;
+      border-color: #4285f4;
+      box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.1);
+    }
+
+    .form-options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 20px 0;
+    }
+
+    .remember-me {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .remember-me input[type="checkbox"] {
+      width: auto;
+      margin: 0;
+    }
+
+    .forgot-password {
+      color: #4285f4;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .forgot-password:hover {
+      text-decoration: underline;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 15px;
+      background: #4285f4;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-bottom: 30px;
+    }
+
+    .login-btn:hover {
+      background: #3367d6;
+    }
+
+    .register-link {
+      text-align: center;
+      color: #4285f4;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .register-link:hover {
+      text-decoration: underline;
+    }
+
+    .signup-container {
+      display: none;
+      width: 900px;
+      height: 600px;
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .signup-form-section {
+      width: 100%;
+      padding: 60px 50px;
+      background: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .signup-form {
+      width: 100%;
+      max-width: 400px;
     }
 
     .hidden {
       opacity: 0;
       transform: scale(0.95);
       pointer-events: none;
+      transition: all 0.3s ease;
     }
 
-    .input-wrapper {
-      width: 100%;
-    }
-
-    .input-wrapper input {
-      width: 100%;
-      box-sizing: border-box;
+    .visible {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+      transition: all 0.3s ease;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="container" id="login-box">
-    <h2>Login</h2>
-    <form>
-      <div class="input-wrapper">
-        <input type="text" placeholder="Username" required>
-      </div>
+  <div class="login-container" id="login-box">
+    <div class="image-section"></div>
+    <div class="form-section">
+      <h2>Login</h2>
+      <form>
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <input type="email" id="email" name="email" required placeholder="Enter your email">
+        </div>
 
-      <div class="password-wrapper">
-        <input type="password" id="login-password" placeholder="Password" required>
-        <span class="toggle-password" onclick="togglePassword('login-password', this)">👁</span>
-      </div>
+        <div class="form-group">
+          <label for="password">Password *</label>
+          <div style="position:relative;">
+            <input type="password" id="password" name="password" required placeholder="Enter your password" style="padding-right:40px;">
+            <span class="toggle-password" onclick="togglePassword('password', this)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:20px;color:#888;">👁️</span>
+          </div>
+        </div>
 
-      <button type="submit">Login</button>
-    </form>
-    <div class="toggle-link">
-      Don’t have an account? <a onclick="showSignup()">Sign Up</a>
+        <div class="form-options">
+          <div class="remember-me">
+            <input type="checkbox" id="remember" name="remember">
+            <label for="remember">Remember Me</label>
+          </div>
+          <a href="#" class="forgot-password">Forgot Password</a>
+        </div>
+
+  <button type="submit" class="login-btn">Sign In</button>
+      </form>
+      
+      <a href="#" class="register-link" onclick="showSignup()">Register Now</a>
     </div>
   </div>
 
-  <div class="container" id="signup-box" style="display: none;">
-    <h2>Sign Up</h2>
-    <form>
-      <input type="text" placeholder="Username" required>
-      <input type="email" placeholder="Email" required>
-      <div class="password-wrapper">
-        <input type="password" id="signup-password" placeholder="Password" required>
-        <span class="toggle-password" onclick="togglePassword('signup-password', this)">👁</span>
-      </div>
+  <div class="signup-container" id="signup-box">
+    <div class="signup-form-section">
+      <div class="signup-form">
+        <h2>Sign Up</h2>
+        <form>
+          <div class="form-group">
+            <label for="signup-username">Username</label>
+            <input type="text" id="signup-username" name="username" required placeholder="Choose a username">
+          </div>
+          
+          <div class="form-group">
+            <label for="signup-email">Email</label>
+            <input type="email" id="signup-email" name="email" required placeholder="Enter your email">
+          </div>
 
-      <button type="submit">Sign Up</button>
-    </form>
-    <div class="toggle-link">
-      Already have an account? <a onclick="showLogin()">Login</a>
+          <div class="form-group">
+            <label for="signup-password">Password</label>
+            <div style="position:relative;">
+              <input type="password" id="signup-password" name="password" required placeholder="Create a password" style="padding-right:40px;">
+              <span class="toggle-password" onclick="togglePassword('signup-password', this)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:20px;color:#888;">👁️</span>
+            </div>
+          </div>
+
+          <button type="submit" class="login-btn">Sign Up</button>
+        </form>
+        
+        <a href="#" class="register-link" onclick="showLogin()">Already have an account? Login</a>
+      </div>
     </div>
   </div>
 
   <script>
     function showSignup() {
-      document.getElementById("login-box").style.display = "none";
-      document.getElementById("signup-box").style.display = "block";
+      const loginBox = document.getElementById("login-box");
+      const signupBox = document.getElementById("signup-box");
+      loginBox.classList.add("hidden");
+      setTimeout(() => {
+        loginBox.style.display = "none";
+        signupBox.style.display = "flex";
+        signupBox.classList.remove("hidden");
+        signupBox.classList.add("visible");
+      }, 300);
     }
+
     function showLogin() {
-      document.getElementById("signup-box").style.display = "none";
-      document.getElementById("login-box").style.display = "block";
+      const loginBox = document.getElementById("login-box");
+      const signupBox = document.getElementById("signup-box");
+      signupBox.classList.add("hidden");
+      setTimeout(() => {
+        signupBox.style.display = "none";
+        loginBox.style.display = "flex";
+        loginBox.classList.remove("hidden");
+        loginBox.classList.add("visible");
+      }, 300);
     }
+
     function togglePassword(id, el) {
       const input = document.getElementById(id);
       if (input.type === "password") {
@@ -174,29 +291,14 @@
         el.textContent = "🙈";
       } else {
         input.type = "password";
-        el.textContent = "👁";
+        el.textContent = "👁️";
       }
     }
-    function showSignup() {
-      document.getElementById("login-box").classList.add("hidden");
-      setTimeout(() => {
-        document.getElementById("login-box").style.display = "none";
-        document.getElementById("signup-box").style.display = "block";
-        document.getElementById("signup-box").classList.remove("hidden");
-      }, 300);
-    }
-    function showLogin() {
-      const loginBox = document.getElementById("login-box");
-      const signupBox = document.getElementById("signup-box");
-      signupBox.classList.add("hidden");
-      setTimeout(() => {
-        signupBox.style.display = "none";
-        loginBox.style.display = "block";
-        loginBox.classList.remove("hidden");
-      }, 300);
-    }
 
-
+    // Initialize with login form visible
+    document.addEventListener('DOMContentLoaded', function() {
+      document.getElementById("login-box").classList.add("visible");
+    });
   </script>
 
 </body>
