@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Sign Up</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #b2b8eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .container {
+      display: flex;
+      width: 900px;
+      height: 600px;
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .image-section {
+      flex: 1;
+      background-image: url('https://digifloat.io/wp-content/uploads/2021/02/Free-3D-Illustration-FB.jpg');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .form-section {
+      flex: 1;
+      padding: 60px 50px;
+      background: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    h2 {
+      font-size: 32px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+      font-weight: 500;
+    }
+
+    input[type="text"], input[type="email"], input[type="password"] {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 15px;
+      transition: border-color 0.3s ease;
+      background: #f8f9fa;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #4285f4;
+      box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.08);
+    }
+
+    .form-note {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 10px;
+    }
+
+    .signup-btn {
+      width: 100%;
+      padding: 14px;
+      background: #28a745;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 8px;
+    }
+
+    .signup-btn:hover { background: #218838 }
+
+    .login-link {
+      text-align: center;
+      color: #4285f4;
+      text-decoration: none;
+      font-weight: 500;
+      display: block;
+      margin-top: 16px;
+    }
+
+    .login-link:hover { text-decoration: underline }
+
+    .small-note { font-size:13px; color:#666; margin-top:10px }
+
+    @media (max-width:920px){
+      .container { width:92vw; height:auto; flex-direction:column; }
+      .image-section { height:220px }
+    }
+    .password-wrapper{ position: relative; }
+    .password-wrapper input { padding-right:46px; }
+    .toggle-password{ position:absolute; right:10px; top:70%; transform:translateY(-50%); width:34px; height:34px; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:18px; color:#888 }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="image-section"></div>
+    <div class="form-section">
+      <h2>Create an account</h2>
+      <form id="signup-form" onsubmit="return handleSignUp(event)">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" required placeholder="Choose a username">
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required placeholder="Enter your email">
+        </div>
+
+        <div class="form-group password-wrapper">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required placeholder="Create a password">
+          <span class="toggle-password" onclick="togglePassword('password', this)">👁️</span>
+        </div>
+
+        <div class="form-group password-wrapper">
+          <label for="confirm-password">Confirm Password</label>
+          <input type="password" id="confirm-password" name="confirm-password" required placeholder="Repeat your password">
+          <span class="toggle-password" onclick="togglePassword('confirm-password', this)">👁️</span>
+        </div>
+
+        <div class="form-note">By creating an account you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.</div>
+
+        <button type="submit" class="signup-btn">Sign Up</button>
+      </form>
+
+      <a href="login.html" class="login-link">Already have an account? Sign in</a>
+    </div>
+  </div>
+
+  <script>
+    function togglePassword(id, el) {
+      const input = document.getElementById(id);
+      if (input.type === "password") {
+        input.type = "text";
+        el.textContent = "🙈";
+      } else {
+        input.type = "password";
+        el.textContent = "👁️";
+      }
+    }
+
+    function handleSignUp(e) {
+      e.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const confirm = document.getElementById('confirm-password').value;
+
+      if (password !== confirm) {
+        alert('Passwords do not match. Please confirm your password.');
+        return false;
+      }
+
+      alert('Thanks, ' + username + '! Your account has been created.');
+      document.getElementById('signup-form').reset();
+      return false;
+    }
+  </script>
+
+</body>
+
+</html>
