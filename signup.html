@@ -117,6 +117,13 @@
     .login-link:hover { text-decoration: underline }
 
     .small-note { font-size:13px; color:#666; margin-top:10px }
+  
+    #password-strength {
+      font-size: 13px;
+      margin-top: 5px;
+      font-weight: 500;
+    }
+
 
     @media (max-width:920px){
       .container { width:92vw; height:auto; flex-direction:column; }
@@ -149,6 +156,8 @@
           <input type="password" id="password" name="password" required placeholder="Create a password">
           <span class="toggle-password" onclick="togglePassword('password', this)">👁️</span>
         </div>
+        <div id="password-strength" class="small-note">Password strength: </div> <!-- to show password strength -->
+
 
         <div class="form-group password-wrapper">
           <label for="confirm-password">Confirm Password</label>
@@ -193,6 +202,30 @@
       document.getElementById('signup-form').reset();
       return false;
     }
+
+    // logic for password strength
+    document.getElementById('password').addEventListener('input', function() {
+      const strengthText = document.getElementById('password-strength');
+      const pwd = this.value;
+
+      let strength = 'Weak';
+      const strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+      const mediumRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
+
+      if (strongRegex.test(pwd)) {
+        strength = 'Strong';
+        strengthText.style.color = 'green';
+      } else if (mediumRegex.test(pwd)) {
+        strength = 'Medium';
+        strengthText.style.color = 'orange';
+      } else {
+        strength = 'Weak';
+        strengthText.style.color = 'red';
+      }
+
+      strengthText.textContent = `Password strength: ${strength}`;
+    });
+
   </script>
 
 </body>
