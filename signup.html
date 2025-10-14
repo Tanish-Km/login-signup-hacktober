@@ -13,22 +13,44 @@
 
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #b2b8eb;
       display: flex;
       align-items: center;
       justify-content: center;
       height: 100vh;
       overflow: hidden;
+      transition: background 0.3s ease, color 0.3s ease;
+      position: relative;
+    }
+
+    /* LIGHT THEME */
+    body.light {
+      background: #b2b8eb;
+      color: #333;
+    }
+
+    /* DARK THEME */
+    body.dark {
+      background: #1e1e2f;
+      color: #f0f0f0;
     }
 
     .container {
       display: flex;
       width: 900px;
       height: 600px;
-      background: white;
       border-radius: 20px;
       overflow: hidden;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    body.light .container {
+      background: white;
+    }
+
+    body.dark .container {
+      background: #2b2b3b;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
     }
 
     .image-section {
@@ -37,21 +59,30 @@
       background-size: cover;
       background-position: center;
       position: relative;
+      transition: filter 0.3s ease;
+    }
+
+    body.dark .image-section {
+      filter: brightness(0.6);
     }
 
     .form-section {
       flex: 1;
       padding: 60px 50px;
-      background: white;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    body.dark .form-section {
+      background: #2b2b3b;
+      color: #f0f0f0;
     }
 
     h2 {
       font-size: 32px;
       font-weight: 600;
-      color: #333;
       margin-bottom: 24px;
       text-align: center;
     }
@@ -63,18 +94,28 @@
     label {
       display: block;
       margin-bottom: 8px;
-      color: #333;
       font-weight: 500;
     }
 
-    input[type="text"], input[type="email"], input[type="password"] {
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
       width: 100%;
       padding: 14px;
       border: 1px solid #ddd;
       border-radius: 8px;
       font-size: 15px;
-      transition: border-color 0.3s ease;
+      transition: all 0.3s ease;
       background: #f8f9fa;
+      color: #333;
+    }
+
+    body.dark input[type="text"],
+    body.dark input[type="email"],
+    body.dark input[type="password"] {
+      background: #3a3a4d;
+      border: 1px solid #555;
+      color: #f0f0f0;
     }
 
     input:focus {
@@ -85,9 +126,11 @@
 
     .form-note {
       font-size: 13px;
-      color: #666;
       margin-bottom: 10px;
+      color: #666;
     }
+
+    body.dark .form-note { color: #ccc; }
 
     .signup-btn {
       width: 100%;
@@ -107,35 +150,87 @@
 
     .login-link {
       text-align: center;
-      color: #4285f4;
-      text-decoration: none;
-      font-weight: 500;
       display: block;
       margin-top: 16px;
+      font-weight: 500;
+      text-decoration: none;
+      color: #4285f4;
     }
 
-    .login-link:hover { text-decoration: underline }
+    body.dark .login-link { color: #82aaff; }
 
-    .small-note { font-size:13px; color:#666; margin-top:10px }
-  
+    .login-link:hover { text-decoration: underline; }
+
+    .small-note { font-size: 13px; margin-top: 10px; }
+
     #password-strength {
       font-size: 13px;
       margin-top: 5px;
       font-weight: 500;
     }
 
-
     @media (max-width:920px){
       .container { width:92vw; height:auto; flex-direction:column; }
       .image-section { height:220px }
     }
-    .password-wrapper{ position: relative; }
+
+    .password-wrapper { position: relative; }
     .password-wrapper input { padding-right:46px; }
-    .toggle-password{ position:absolute; right:10px; top:70%; transform:translateY(-50%); width:34px; height:34px; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:18px; color:#888 }
+    .toggle-password {
+      position:absolute;
+      right:10px;
+      top:70%;
+      transform:translateY(-50%);
+      width:34px;
+      height:34px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      font-size:18px;
+      color:#888;
+    }
+
+    /* SWIPE SWITCH */
+    .theme-switch {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      width: 60px;
+      height: 30px;
+      background: #ccc;
+      border-radius: 30px;
+      padding: 3px;
+      transition: background 0.3s ease;
+    }
+
+    .theme-switch input { display: none; }
+
+    .slider {
+      width: 24px;
+      height: 24px;
+      background: #fff;
+      border-radius: 50%;
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    .theme-switch input:checked + .slider {
+      transform: translateX(30px);
+      background: #4285f4;
+    }
   </style>
 </head>
 
-<body>
+<body class="light">
+  <!-- SWIPE SWITCH -->
+  <label class="theme-switch">
+    <input type="checkbox" id="theme-toggle">
+    <span class="slider"></span>
+  </label>
+
   <div class="container">
     <div class="image-section"></div>
     <div class="form-section">
@@ -156,8 +251,7 @@
           <input type="password" id="password" name="password" required placeholder="Create a password">
           <span class="toggle-password" onclick="togglePassword('password', this)">👁️</span>
         </div>
-        <div id="password-strength" class="small-note">Password strength: </div> <!-- to show password strength -->
-
+        <div id="password-strength" class="small-note">Password strength: </div>
 
         <div class="form-group password-wrapper">
           <label for="confirm-password">Confirm Password</label>
@@ -203,11 +297,10 @@
       return false;
     }
 
-    // logic for password strength
+    // Password strength logic
     document.getElementById('password').addEventListener('input', function() {
       const strengthText = document.getElementById('password-strength');
       const pwd = this.value;
-
       let strength = 'Weak';
       const strongRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
       const mediumRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
@@ -226,8 +319,12 @@
       strengthText.textContent = `Password strength: ${strength}`;
     });
 
+    // Theme toggle
+    document.getElementById('theme-toggle').addEventListener('change', function () {
+      document.body.classList.toggle('dark', this.checked);
+      document.body.classList.toggle('light', !this.checked);
+    });
   </script>
-
 </body>
 
 </html>
