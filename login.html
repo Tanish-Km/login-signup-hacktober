@@ -1,378 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
-  <title>Login & Signup Page</title>
+  <title>Login</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display:flex; align-items:center; justify-content:center;
+      height:100vh; transition:background 0.3s ease, color 0.3s ease;
+      position:relative;
+    }
+    body.light { background:#b2b8eb; color:#333; }
+    body.dark { background:#1e1e2f; color:#f0f0f0; }
+
+    .container{
+      display:flex; width:800px; height:500px; background:white;
+      border-radius:20px; overflow:hidden; box-shadow:0 20px 40px rgba(0,0,0,0.3);
+      transition:background 0.3s ease, color 0.3s ease;
+    }
+    body.dark .container { background:#2b2b3b; box-shadow:0 20px 40px rgba(0,0,0,0.7); }
+
+    .image-section{
+      flex:1;
+      background-image:url('https://digifloat.io/wp-content/uploads/2021/02/Free-3D-Illustration-FB.jpg');
+      background-size:cover; background-position:center;
+      transition:filter 0.3s ease;
+    }
+    body.dark .image-section { filter:brightness(0.6); }
+
+    .form-section{
+      flex:1; padding:60px 50px; display:flex; flex-direction:column; justify-content:center;
+      transition:background 0.3s ease, color 0.3s ease;
     }
 
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      overflow: hidden;
-      transition: background 0.3s ease, color 0.3s ease;
-      position: relative;
-    }
+    h2{text-align:center; font-size:32px; font-weight:600; margin-bottom:24px;}
 
-    /* LIGHT THEME */
-    body.light {
-      background: #b2b8eb;
-      color: #333;
+    .form-group{margin-bottom:18px; position:relative;}
+    label{display:block; margin-bottom:8px; font-weight:500;}
+    input{
+      width:100%; padding:14px; border:1px solid #ddd; border-radius:8px;
+      font-size:15px; background:#f8f9fa; color:#333; transition:all 0.3s ease;
     }
+    body.dark input{background:#3a3a4d; border:1px solid #555; color:#f0f0f0;}
+    input:focus{outline:none; border-color:#4285f4; box-shadow:0 0 0 3px rgba(66,133,244,0.08);}
+    input.valid{border-color:green;} input.invalid{border-color:red;}
+    .valid-icon,.invalid-icon{position:absolute; right:10px; top:42px; font-size:18px;}
+    .valid-icon{color:green;} .invalid-icon{color:red;}
 
-    /* DARK THEME */
-    body.dark {
-      background: #1e1e2f;
-      color: #f0f0f0;
+    .login-btn{
+      width:100%; padding:14px; background:#4285f4; color:white;
+      border:none; border-radius:8px; font-size:16px; font-weight:600; cursor:pointer;
+      transition:background 0.3s ease;
     }
+    .login-btn:hover{background:#3367d6;}
 
-    .login-container,
-    .signup-container {
-      display: flex;
-      width: 900px;
-      height: 600px;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-      transition: background 0.3s ease, color 0.3s ease;
-    }
+    .signup-link{text-align:center; display:block; margin-top:16px; font-weight:500; text-decoration:none; color:#28a745;}
+    .signup-link:hover{text-decoration:underline;}
 
-    body.light .login-container,
-    body.light .signup-container {
-      background: white;
-    }
-
-    body.dark .login-container,
-    body.dark .signup-container {
-      background: #2b2b3b;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
-    }
-
-    .image-section {
-      flex: 1;
-      background-image: url('https://digifloat.io/wp-content/uploads/2021/02/Free-3D-Illustration-FB.jpg');
-      background-size: cover;
-      background-position: center;
-      position: relative;
-      transition: filter 0.3s ease;
-    }
-
-    body.dark .image-section {
-      filter: brightness(0.6);
-    }
-
-    .form-section,
-    .signup-form-section {
-      flex: 1;
-      padding: 60px 50px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      transition: background 0.3s ease, color 0.3s ease;
-    }
-
-    body.dark .form-section,
-    body.dark .signup-form-section {
-      background: #2b2b3b;
-      color: #f0f0f0;
-    }
-
-    h2 {
-      font-size: 32px;
-      font-weight: 600;
-      margin-bottom: 40px;
-      text-align: center;
-    }
-
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 500;
-    }
-
-    input[type="text"],
-    input[type="email"],
-    input[type="password"] {
-      width: 100%;
-      padding: 15px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      font-size: 16px;
-      transition: all 0.3s ease;
-    }
-
-    body.dark input[type="text"],
-    body.dark input[type="email"],
-    body.dark input[type="password"] {
-      background: #3a3a4d;
-      border: 1px solid #555;
-      color: #f0f0f0;
-    }
-
-    input:focus {
-      outline: none;
-      border-color: #4285f4;
-      box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.1);
-    }
-
-    .form-options {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 20px 0;
-      font-size: 14px;
-    }
-
-    .remember-me {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .forgot-password {
-      text-decoration: none;
-    }
-
-    body.light .forgot-password {
-      color: #4285f4;
-    }
-
-    body.dark .forgot-password {
-      color: #82aaff;
-    }
-
-    .login-btn {
-      width: 100%;
-      padding: 15px;
-      background: #4285f4;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      margin-bottom: 30px;
-    }
-
-    .login-btn:hover {
-      background: #3367d6;
-    }
-
-    .register-link {
-      text-align: center;
-      text-decoration: none;
-      font-weight: 500;
-      display: block;
-      margin-top: 10px;
-    }
-
-    body.light .register-link {
-      color: #4285f4;
-    }
-
-    body.dark .register-link {
-      color: #82aaff;
-    }
-
-    .signup-container {
-      display: none;
-    }
-
-    .hidden {
-      opacity: 0;
-      transform: scale(0.95);
-      pointer-events: none;
-      transition: all 0.3s ease;
-    }
-
-    .visible {
-      opacity: 1;
-      transform: scale(1);
-      pointer-events: auto;
-      transition: all 0.3s ease;
-    }
-
-    /* SWIPE SWITCH */
+    /* Theme Switch */
     .theme-switch {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-      width: 60px;
-      height: 30px;
-      background: #ccc;
-      border-radius: 30px;
-      padding: 3px;
-      transition: background 0.3s ease;
+      position: absolute; top:20px; right:20px; display:flex; align-items:center;
+      cursor:pointer; width:60px; height:30px; background:#ccc; border-radius:30px; padding:3px; transition: background 0.3s;
     }
+    .theme-switch input{display:none;}
+    .slider{width:24px; height:24px; background:#fff; border-radius:50%; transition: transform 0.3s, background 0.3s;}
+    .theme-switch input:checked + .slider{transform:translateX(30px); background:#4285f4;}
 
-    .theme-switch input {
-      display: none;
-    }
-
-    .slider {
-      width: 24px;
-      height: 24px;
-      background: #fff;
-      border-radius: 50%;
-      transition: transform 0.3s ease, background 0.3s ease;
-    }
-
-    .theme-switch input:checked + .slider {
-      transform: translateX(30px);
-      background: #4285f4;
+    @media(max-width:920px){
+      .container{width:92vw; height:auto; flex-direction:column;}
+      .image-section{height:220px;}
     }
   </style>
 </head>
-
 <body class="light">
 
-  <!-- SWIPE SWITCH -->
+  <!-- Theme Toggle -->
   <label class="theme-switch">
     <input type="checkbox" id="theme-toggle">
     <span class="slider"></span>
   </label>
 
-  <div class="login-container" id="login-box">
+  <div class="container">
     <div class="image-section"></div>
     <div class="form-section">
-      <h2>Login</h2>
-      <form>
+      <h2>Welcome Back</h2>
+      <form id="login-form">
         <div class="form-group">
-          <label for="email">Email *</label>
-          <input type="email" id="email" name="email" required placeholder="Enter your email">
+          <label for="email">Email</label>
+          <input type="email" id="email" required placeholder="Enter your email">
+          <span id="email-icon"></span>
         </div>
-
         <div class="form-group">
-          <label for="password">Password *</label>
-          <div style="position:relative;">
-            <input type="password" id="password" name="password" required placeholder="Enter your password" style="padding-right:40px;">
-            <span class="toggle-password" onclick="togglePassword('password', this)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:20px;color:#888;">👁️</span>
-          </div>
+          <label for="password">Password</label>
+          <input type="password" id="password" required placeholder="Enter your password">
+          <span id="password-icon"></span>
         </div>
-
-        <div class="form-options">
-          <div class="remember-me">
-            <input type="checkbox" id="remember" name="remember">
-            <label for="remember">Remember Me</label>
-          </div>
-          <a href="#" class="forgot-password">Forgot Password</a>
-        </div>
-
-        <button type="submit" class="login-btn">Sign In</button>
+        <button type="submit" class="login-btn">Login</button>
       </form>
-
-      <a href="#" class="register-link" onclick="showSignup()">Register Now</a>
-    </div>
-  </div>
-
-  <div class="signup-container" id="signup-box">
-    <div class="signup-form-section">
-      <div class="signup-form">
-        <h2>Sign Up</h2>
-        <form>
-          <div class="form-group">
-            <label for="signup-username">Username</label>
-            <input type="text" id="signup-username" name="username" required placeholder="Choose a username">
-          </div>
-
-          <div class="form-group">
-            <label for="signup-email">Email</label>
-            <input type="email" id="signup-email" name="email" required placeholder="Enter your email">
-          </div>
-
-          <div class="form-group">
-            <label for="signup-password">Password</label>
-            <div style="position:relative;">
-              <input type="password" id="signup-password" name="password" required placeholder="Create a password" style="padding-right:40px;">
-              <span class="toggle-password" onclick="togglePassword('signup-password', this)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:20px;color:#888;">👁️</span>
-            </div>
-          </div>
-
-          <button type="submit" class="login-btn">Sign Up</button>
-        </form>
-
-        <a href="#" class="register-link" onclick="showLogin()">Already have an account? Login</a>
-      </div>
+      <a href="signup.html" class="signup-link">Don't have an account? Sign up</a>
     </div>
   </div>
 
   <script>
-    function showSignup() {
-      const loginBox = document.getElementById("login-box");
-      const signupBox = document.getElementById("signup-box");
-      loginBox.classList.add("hidden");
-      setTimeout(() => {
-        loginBox.style.display = "none";
-        signupBox.style.display = "flex";
-        signupBox.classList.remove("hidden");
-        signupBox.classList.add("visible");
-      }, 300);
+    // Theme toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const savedTheme = localStorage.getItem('theme');
+    if(savedTheme){
+      document.body.classList.toggle('dark', savedTheme==='dark');
+      document.body.classList.toggle('light', savedTheme==='light');
+      themeToggle.checked = savedTheme==='dark';
     }
+    themeToggle.addEventListener('change', function(){
+      const theme = this.checked ? 'dark' : 'light';
+      document.body.classList.toggle('dark', this.checked);
+      document.body.classList.toggle('light', !this.checked);
+      localStorage.setItem('theme', theme);
+    });
 
-    function showLogin() {
-      const loginBox = document.getElementById("login-box");
-      const signupBox = document.getElementById("signup-box");
-      signupBox.classList.add("hidden");
-      setTimeout(() => {
-        signupBox.style.display = "none";
-        loginBox.style.display = "flex";
-        loginBox.classList.remove("hidden");
-        loginBox.classList.add("visible");
-      }, 300);
+    // Real-time validation
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+    function setIcon(field, valid){
+      const icon = document.getElementById(field.id+'-icon');
+      icon.textContent = valid?'✔️':'❌';
+      icon.className = valid?'valid-icon':'invalid-icon';
+      field.classList.toggle('valid', valid);
+      field.classList.toggle('invalid', !valid);
     }
+    email.addEventListener('input', ()=>setIcon(email,/^[^ ]+@[^ ]+\.[a-z]{2,3}$/.test(email.value)));
+    password.addEventListener('input', ()=>setIcon(password,password.value.length>=6));
 
-    function togglePassword(id, el) {
-      const input = document.getElementById(id);
-      if (input.type === "password") {
-        input.type = "text";
-        el.textContent = "🙈";
-      } else {
-        input.type = "password";
-        el.textContent = "👁️";
+    // Login simulation
+    document.getElementById('login-form').addEventListener('submit', e=>{
+      e.preventDefault();
+      const storedUser = JSON.parse(localStorage.getItem('user'));
+      if(!storedUser){
+        alert("No account found! Please sign up first.");
+        return;
       }
-    }
-
-    // 🌙 Theme toggle with localStorage
-const themeToggle = document.getElementById('theme-toggle');
-
-// Apply saved theme on load
-const savedTheme = localStorage.getItem('theme');
-if (savedTheme) {
-  document.body.classList.toggle('dark', savedTheme === 'dark');
-  document.body.classList.toggle('light', savedTheme === 'light');
-  themeToggle.checked = savedTheme === 'dark';
-}
-
-// Save theme preference when user toggles
-themeToggle.addEventListener('change', function() {
-  const theme = this.checked ? 'dark' : 'light';
-  document.body.classList.toggle('dark', this.checked);
-  document.body.classList.toggle('light', !this.checked);
-  localStorage.setItem('theme', theme);
-});
-
-
-    document.addEventListener('DOMContentLoaded', function () {
-      document.getElementById("login-box").classList.add("visible");
+      if(email.value===storedUser.email && password.value===storedUser.password){
+        alert("Welcome back, "+storedUser.username+"!");
+      }else{
+        alert("Invalid email or password!");
+      }
     });
   </script>
-
 </body>
-
 </html>
