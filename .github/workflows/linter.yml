@@ -1,0 +1,39 @@
+name: "Code style & lint (Black + Flake8)"
+
+# Run on every pull request to main or master
+on:
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  lint:
+    name: Black (format) + Flake8 (lint)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip
+
+      - name: Install tools
+        run: |
+          pip install black==23.9.1 flake8==6.1.0
+
+      - name: Run Black (check mode)
+        run: |
+          echo "Checking formatting with Black..."
+          black --version
+          black --check .
+
+      - name: Run Flake8
+        run: |
+          echo "Running Flake8..."
+          flake8 . --max-line-length=88
