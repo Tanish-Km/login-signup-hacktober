@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Signup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .auth-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 420px;
+            padding: 40px;
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .auth-header h1 {
+            font-size: 24px;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .auth-header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            color: #333;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            outline: none;
+            background: #fafafa;
+        }
+
+        .form-group input:focus {
+            border-color: #2563eb;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 13px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .submit-btn:active {
+            transform: scale(0.98);
+        }
+
+        .divider {
+            text-align: center;
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            height: 1px;
+            background: #e5e5e5;
+        }
+
+        .divider span {
+            background: white;
+            padding: 0 15px;
+            color: #999;
+            font-size: 13px;
+            position: relative;
+        }
+
+        .toggle-link {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .toggle-link a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .toggle-link a:hover {
+            text-decoration: underline;
+        }
+
+        .form-section {
+            display: none;
+        }
+
+        .form-section.active {
+            display: block;
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .extra-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 15px 0;
+            font-size: 13px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #666;
+        }
+
+        .remember-me input[type="checkbox"] {
+            cursor: pointer;
+        }
+
+        .forgot-password {
+            color: #2563eb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background: #fee;
+            border: 1px solid #fcc;
+            color: #c33;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .success-message {
+            background: #efe;
+            border: 1px solid #cfc;
+            color: #3c3;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .auth-container {
+                padding: 30px 25px;
+            }
+
+            .auth-header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <!-- Login Form -->
+        <div id="loginSection" class="form-section active">
+            <div class="auth-header">
+                <h1>Welcome back</h1>
+                <p>Enter your credentials to access your account</p>
+            </div>
+
+            <div id="loginError" class="error-message"></div>
+            
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" placeholder="you@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                </div>
+
+                <div class="extra-options">
+                    <label class="remember-me">
+                        <input type="checkbox" id="rememberMe">
+                        <span>Remember me</span>
+                    </label>
+                    <a class="forgot-password" onclick="alert('Password reset link would be sent to your email')">
+                        Forgot password?
+                    </a>
+                </div>
+
+                <button type="submit" class="submit-btn">Sign In</button>
+            </form>
+
+            <div class="divider">
+                <span>or</span>
+            </div>
+
+            <div class="toggle-link">
+                Don't have an account? <a onclick="showSignup()">Sign up</a>
+            </div>
+        </div>
+
+        <!-- Signup Form -->
+        <div id="signupSection" class="form-section">
+            <div class="auth-header">
+                <h1>Create an account</h1>
+                <p>Sign up to get started</p>
+            </div>
+
+            <div id="signupError" class="error-message"></div>
+            <div id="signupSuccess" class="success-message"></div>
+            
+            <form id="signupForm" onsubmit="handleSignup(event)">
+                <div class="form-group">
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" placeholder="John Doe" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" placeholder="you@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" placeholder="Minimum 8 characters" required minlength="8">
+                </div>
+
+                <div class="form-group">
+                    <label for="signupConfirm">Confirm Password</label>
+                    <input type="password" id="signupConfirm" placeholder="Re-enter password" required>
+                </div>
+
+                <button type="submit" class="submit-btn">Create Account</button>
+            </form>
+
+            <div class="divider">
+                <span>or</span>
+            </div>
+
+            <div class="toggle-link">
+                Already have an account? <a onclick="showLogin()">Sign in</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle between forms
+        function showSignup() {
+            document.getElementById('loginSection').classList.remove('active');
+            document.getElementById('signupSection').classList.add('active');
+            clearMessages();
+        }
+
+        function showLogin() {
+            document.getElementById('signupSection').classList.remove('active');
+            document.getElementById('loginSection').classList.add('active');
+            clearMessages();
+        }
+
+        // Clear all error/success messages
+        function clearMessages() {
+            document.querySelectorAll('.error-message, .success-message').forEach(el => {
+                el.style.display = 'none';
+                el.textContent = '';
+            });
+        }
+
+        // Show error message
+        function showError(elementId, message) {
+            const el = document.getElementById(elementId);
+            el.textContent = message;
+            el.style.display = 'block';
+        }
+
+        // Show success message
+        function showSuccess(elementId, message) {
+            const el = document.getElementById(elementId);
+            el.textContent = message;
+            el.style.display = 'block';
+        }
+
+        // Handle Login
+        function handleLogin(e) {
+            e.preventDefault();
+            clearMessages();
+
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const remember = document.getElementById('rememberMe').checked;
+
+            // Basic validation
+            if (!email || !password) {
+                showError('loginError', 'Please fill in all fields');
+                return;
+            }
+
+            // Simulate authentication
+            console.log('Login attempt:', { email, password, remember });
+            
+            // Replace this with actual authentication API call
+            setTimeout(() => {
+                alert(`Login successful!\n\nEmail: ${email}\nRemember me: ${remember}`);
+                document.getElementById('loginForm').reset();
+            }, 500);
+        }
+
+        // Handle Signup
+        function handleSignup(e) {
+            e.preventDefault();
+            clearMessages();
+
+            const name = document.getElementById('signupName').value.trim();
+            const email = document.getElementById('signupEmail').value.trim();
+            const password = document.getElementById('signupPassword').value;
+            const confirm = document.getElementById('signupConfirm').value;
+
+            // Validation
+            if (!name || !email || !password || !confirm) {
+                showError('signupError', 'Please fill in all fields');
+                return;
+            }
+
+            if (password.length < 8) {
+                showError('signupError', 'Password must be at least 8 characters long');
+                return;
+            }
+
+            if (password !== confirm) {
+                showError('signupError', 'Passwords do not match');
+                return;
+            }
+
+            // Email format validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showError('signupError', 'Please enter a valid email address');
+                return;
+            }
+
+            // Simulate account creation
+            console.log('Signup attempt:', { name, email, password });
+            
+            // Replace this with actual registration API call
+            setTimeout(() => {
+                showSuccess('signupSuccess', 'Account created successfully! Redirecting to login...');
+                document.getElementById('signupForm').reset();
+                
+                setTimeout(() => {
+                    showLogin();
+                }, 2000);
+            }, 500);
+        }
+    </script>
+</body>
+</html>
